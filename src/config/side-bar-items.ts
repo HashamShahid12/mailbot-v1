@@ -70,6 +70,6 @@ export const sidebarLinks: SidebarItem[] = [
     ],
   },
   { label: "Integrations", icon: FiGrid, path: "/integrations" },
-  { label: "Components", icon: FiSend, path: "/all-components" },
-  { label: "Rules", icon: FiSend, path: "/rules" },
+  // { label: "Components", icon: FiSend, path: "/all-components" },
+  // // { label: "Rules", icon: FiSend, path: "/rules" },
 ];

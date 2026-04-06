@@ -7,6 +7,7 @@ const ShopConnectionGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { needsShopConnection, isAuthenticated } = useAuthStore();
   const location = useLocation();
 
+  // if (!isAuthenticated) return children;
   if (!isAuthenticated) return children;
 
   if (needsShopConnection && location.pathname !== "/connect-shop") {
