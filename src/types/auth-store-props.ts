@@ -14,6 +14,9 @@ export interface AuthState {
   user: UserProfile | null;
   needsShopConnection: boolean;
   isSessionExpired: boolean;
+  postLoginStepOneComplete: boolean;
+  postLoginStepTwoComplete: boolean;
+  isPostLoginFlowComplete: boolean;
   login: (payload: {
     accessToken: string;
     refreshToken?: string | null;
@@ -24,4 +27,7 @@ export interface AuthState {
   logout: () => void;
   setNeedsShopConnection: (value: boolean) => void;
   setSessionExpired: (value: boolean) => void;
+  completePostLoginStepOne: () => void;
+  completePostLoginStepTwo: () => void;
+  resetPostLoginFlow: () => void;
 }

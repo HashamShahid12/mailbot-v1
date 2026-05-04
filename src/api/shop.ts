@@ -7,6 +7,12 @@ export interface ClaimShopRequest {
   platform: "SHOPIFY";
 }
 
+export interface ConnectManualShopRequest {
+  shop_name: string;
+  store_display_name: string;
+  platform: "OTHER";
+}
+
 export async function claimShop(payload: ClaimShopRequest) {
   console.log("[ShopAPI] Claim shop request initiated.", payload);
   try {
@@ -16,6 +22,19 @@ export async function claimShop(payload: ClaimShopRequest) {
     });
   } catch (error) {
     console.error("[ShopAPI] Claim shop request failed:", error);
+    throw error;
+  }
+}
+
+export async function connectManualShop(payload: ConnectManualShopRequest) {
+  console.log("[ShopAPI] Connect manual shop request initiated.", payload);
+  try {
+    return authorizedRequest<Shop>("/api/shop/connect-manual", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  } catch (error) {
+    console.error("[ShopAPI] Connect manual shop request failed:", error);
     throw error;
   }
 }

@@ -14,6 +14,9 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       needsShopConnection: true,
       isSessionExpired: false,
+      postLoginStepOneComplete: false,
+      postLoginStepTwoComplete: false,
+      isPostLoginFlowComplete: false,
 
       login: ({
         accessToken,
@@ -35,6 +38,9 @@ export const useAuthStore = create<AuthState>()(
           user,
           needsShopConnection,
           isSessionExpired: false,
+          postLoginStepOneComplete: false,
+          postLoginStepTwoComplete: false,
+          isPostLoginFlowComplete: false,
         });
       },
 
@@ -51,6 +57,9 @@ export const useAuthStore = create<AuthState>()(
           user: null,
           needsShopConnection: true,
           isSessionExpired: false,
+          postLoginStepOneComplete: false,
+          postLoginStepTwoComplete: false,
+          isPostLoginFlowComplete: false,
         });
       },
       setNeedsShopConnection: (value) => {
@@ -62,6 +71,22 @@ export const useAuthStore = create<AuthState>()(
       setSessionExpired: (value) => {
         set({ isSessionExpired: value });
       },
+      completePostLoginStepOne: () => {
+        set({ postLoginStepOneComplete: true });
+      },
+      completePostLoginStepTwo: () => {
+        set({
+          postLoginStepTwoComplete: true,
+          isPostLoginFlowComplete: true,
+        });
+      },
+      resetPostLoginFlow: () => {
+        set({
+          postLoginStepOneComplete: false,
+          postLoginStepTwoComplete: false,
+          isPostLoginFlowComplete: false,
+        });
+      },
     }),
     {
       name: "auth-storage",
@@ -72,6 +97,9 @@ export const useAuthStore = create<AuthState>()(
         sessionId: state.sessionId,
         user: state.user,
         needsShopConnection: state.needsShopConnection,
+        postLoginStepOneComplete: state.postLoginStepOneComplete,
+        postLoginStepTwoComplete: state.postLoginStepTwoComplete,
+        isPostLoginFlowComplete: state.isPostLoginFlowComplete,
       }),
       onRehydrateStorage: () => (state) => {
         if (state) state.isLoading = false;

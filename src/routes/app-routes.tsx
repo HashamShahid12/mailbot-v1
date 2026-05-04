@@ -3,7 +3,6 @@ import { Campaigns } from "@/pages/campaign/campaign";
 import { AuthLayout } from "@/layout/auth/auth-layout";
 import { DashboardLayout } from "../layout/dashboard/dashboard-layout";
 import AuthGuard from "@/guards/auth-guard";
-import ShopConnectionGuard from "@/guards/shop-connection-guard";
 import { useAuthStore } from "@/store/auth-store";
 import AppLoader from "@/components/ui/loadings/app-loader";
 import GrowthTools from "@/pages/audience/growth-tools";
@@ -11,7 +10,6 @@ import Profiles from "@/pages/audience/profile";
 import ListAndSegment from "@/pages/audience/list-and-segment";
 import CreateCampaignByType from "@/pages/campaign/[type]";
 import CampaignWizard from "@/pages/campaign/create";
-import AnalyticsDashboards from "@/pages/analytics";
 import DashboardDetails from "@/pages/analytics/dashboard";
 import { Metrics } from "@/pages/analytics/metrics/Metrics";
 import OnboardingLayout from "@/components/onboarding/OnboardingLayout";
@@ -21,6 +19,7 @@ import SegmentationEditDefinition from "@/components/ui/audiance/list-and-segmen
 import Components from "@/pages/all-components";
 import WooIntegrationPage from "@/pages/integration/woo-integration-page";
 import LoginForm from "@/pages/auth/login";
+import PostLoginSetup from "@/pages/auth/post-login-setup";
 import RegisterForm from "@/pages/auth/signup";
 import VerifyEmail from "@/pages/auth/verify-email";
 import { TwoFactorAuth } from "@/pages/auth/mfa";
@@ -30,15 +29,9 @@ import { Forms } from "@/pages/forms/forms";
 import CreateFlow from "@/pages/flows/create-flow";
 import Flows from "@/pages/flows/flows";
 import IndexCreateFlowRoute from "@/components/ui/flows/index-create-flow-route";
-import PreventLostSales from "@/components/ui/flows/prevent-lost-sales";
-import NurtureSubScribers from "@/components/ui/flows/nurture-subscribers";
 import { Rules } from "@/pages/content/rules";
 import { GrowthStrategies } from "@/pages/growth-strategies/growth-strategies";
 import { CreateForm } from "@/pages/forms/create-forms";
-import BuildCustomerLoyalty from "@/components/ui/flows/build-customer-loyalty";
-import ReminderPeoplePurchase from "@/components/ui/flows/reminder-people-purchase";
-import EncourageRepeatPurchases from "@/components/ui/flows/encourage-repeat-purchases";
-import SendOrderUpdates from "@/components/ui/flows/send-order-updates";
 import Benchmarks from "@/pages/analytics/benchmarks/benchmarks";
 import CustomReports from "@/pages/analytics/custom-reports/custom-reports";
 import Deliverability from "@/pages/analytics/deliverability/deliverability";
@@ -65,6 +58,7 @@ import ThemeExtension from "@/pages/settings/theme-extension";
 import { Settings } from "@/pages/settings-v2/settings";
 import MonitorSettingsAlertLog from "@/pages/settings-v2/monitor-settings-alert-log";
 import Downloads from "@/pages/downloads/downloads";
+import PostLoginFlowGuard from "@/guards/post-login-flow-guard";
 
 export const AppRoutes = () => {
   const { isLoading } = useAuthStore();
@@ -83,20 +77,22 @@ export const AppRoutes = () => {
       <Route
         element={
           <AuthGuard>
-            <Outlet />
+            <PostLoginFlowGuard>
+              <Outlet />
+            </PostLoginFlowGuard>
           </AuthGuard>
         }
       >
+        <Route path="/post-login-setup" element={<PostLoginSetup />} />
         <Route path="/editor" element={<EditorPage />} />
       </Route>
 
       <Route
         element={
           <AuthGuard>
-            {/* <DashboardLayout /> */}
-            <ShopConnectionGuard>
+            <PostLoginFlowGuard>
               <DashboardLayout />
-            </ShopConnectionGuard>
+            </PostLoginFlowGuard>
           </AuthGuard>
         }
       >
@@ -177,7 +173,9 @@ export const AppRoutes = () => {
       <Route
         element={
           <AuthGuard>
-            <Outlet />
+            <PostLoginFlowGuard>
+              <Outlet />
+            </PostLoginFlowGuard>
           </AuthGuard>
         }
       >

@@ -81,7 +81,7 @@ export default function LoginForm() {
         user: payload.user,
         needsShopConnection: payload.needsShopConnection,
       });
-      navigate("/dashboard");
+      navigate("/post-login-setup");
     } catch (err) {
       if (err.code === "AUTH_EMAIL_NOT_VERIFIED") {
         setMailUnverified(true);
